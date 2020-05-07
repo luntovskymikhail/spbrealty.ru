@@ -1,0 +1,10 @@
+Operation system: Windows-10-10.0.18362-SP0
+Browser name: opera
+Browser version: 81.0.4044.129
+
+Started at: 07.05.2020_19.39.23
+
+Step 1: Pass (Title name is correct)
+Step 2: Pass (Opens Auth page)
+
+Ended at: 07.05.2020_19.40.55
