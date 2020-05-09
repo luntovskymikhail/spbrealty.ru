@@ -4,15 +4,27 @@ from datetime import datetime
 import time
 import platform
 import ExcelFunctions
+import openpyxl
 
-driver = webdriver.Opera(executable_path="C:\Drivers\operadriver.exe")
+driver = webdriver.Ie(executable_path="C://Drivers//IEDriverServer.exe")
 path = "C://Users//Mikhail//PycharmProjects//spbrealty.ru//CheckList.xlsx"
-driver.maximize_window()
+
+#write result at next column
+book = openpyxl.load_workbook(path)
+sheet = book.active
+num = sheet.max_column + 1
+
+#Header of checklist
+ExcelFunctions.writeData(path, "List1", 1, num, platform.platform())
+ExcelFunctions.writeData(path, "List1", 2, num, driver.capabilities['browserName'])
+ExcelFunctions.writeData(path, "List1", 3, num, driver.capabilities['browserVersion'])
+ExcelFunctions.writeData(path, "List1", 4, num, datetime.now().strftime('%d.%m.%Y_%H.%M.%S'))
 
 #Opens main page
+driver.maximize_window()
 driver.get("https://www.spbrealty.ru/")
-ExcelFunctions.writeData(path, "List1", 5, 2, "Pass")
-time.sleep(13)
+ExcelFunctions.writeData(path, "List1", 6, num, "Pass")
+#time.sleep(13)
 
 
 #Left click on lk button
@@ -20,28 +32,3 @@ time.sleep(13)
 
 #Declares end time of test run and closing the browser
 driver.quit()
-
-
-'''
-title = "Петербургская Недвижимость 🏠 - купить квартиру, жилая, элитная, загородная и коммерческая недвижимость Санкт-Петербурга"
-
-#Creating log file + puts system info and start time inside
-file = '%s_%s' % (datetime.now().strftime('%d.%m.%Y_%H.%M.%S'), 'testrun.txt')
-
-date format datetime.now().strftime('%d.%m.%Y_%H.%M.%S')
-
-open(file, 'w').write("Operation system: " + platform.platform() + "\n")
-open(file, 'a').write("Browser name: " + driver.capabilities['browserName'] + "\n")
-open(file, 'a').write("Browser version: " + driver.capabilities['version'] + "\n" + "\n")
-open(file, 'a').write("Started at: " + datetime.now().strftime('%d.%m.%Y_%H.%M.%S') + "\n" + "\n")
-
-if driver.title == title:
-    open(file, 'a').write("Step 1: Pass (Title name is correct)" + "\n")
-else:
-    open(file, 'a').write("Step 1: Fail (Title name is correct)" + "\n")
-
-open(file, 'a').write("Step 2: Pass (Opens Auth page)" + "\n" + "\n")
-
-open(file, 'a').write("Ended at: " + datetime.now().strftime('%d.%m.%Y_%H.%M.%S'))
-
-'''
