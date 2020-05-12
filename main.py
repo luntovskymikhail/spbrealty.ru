@@ -5,10 +5,11 @@ from datetime import datetime
 import platform
 import ExcelFunctions
 import openpyxl
+import time
 
 #driver = webdriver.Edge(executable_path="C:\Drivers\msedgedriver.exe")
-#driver = webdriver.Chrome(executable_path="C:\Drivers\chromedriver.exe")
-driver = webdriver.Firefox(executable_path="C:\Drivers\geckodriver.exe")
+driver = webdriver.Chrome(executable_path="C:\Drivers\chromedriver.exe")
+#driver = webdriver.Firefox(executable_path="C:\Drivers\geckodriver.exe")
 #driver = webdriver.Ie(executable_path="C:\Drivers\IEDriverServer.exe")
 #driver = webdriver.Opera(executable_path="C:\Drivers\operadriver.exe")
 
@@ -32,10 +33,13 @@ driver.get("https://www.spbrealty.ru/")
 driver.implicitly_wait(30)
 window_before = driver.window_handles[0]
 ExcelFunctions.writeData(path, "List1", 6, num, "Pass")
+time.sleep(13)
+#driver.execute_script("window.scrollBy(0,document.body.scrollHeight)")
+driver.save_screenshot("C://Users//Mikhail//PycharmProjects//spbrealty.ru//screenshots//homepage.png")
 
 #Check title
 title = "Петербургская Недвижимость 🏠 - купить квартиру, жилая, элитная, загородная и коммерческая недвижимость Санкт-Петербурга"
-assert title in driver.title
+assert title in driver.title, "title is wrong"
 ExcelFunctions.writeData(path, "List1", 7, num, "Pass")
 
 #Logo is visible
